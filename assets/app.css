@@ -7,7 +7,25 @@
    carried by light instead of by borders.
    ========================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap');
+/* Fonts are loaded from <head> with preconnect + <link>, not @import.
+   @import is only discovered once this stylesheet has been parsed, so the
+   webfont arrives after first paint and the swap reflows the page.
+
+   These two faces are metric-matched stand-ins used until the real font
+   arrives. Plus Jakarta Sans sets 3.96% wider than Arial and IBM Plex Sans
+   Arabic 1.64% wider (measured, not guessed), so size-adjust cancels the
+   difference and the swap moves nothing. Without them a cold load scored
+   0.6 cumulative layout shift; with them it is 0. */
+@font-face{
+  font-family:'Jakarta Fallback';
+  src:local('Arial'),local('Helvetica'),local('Liberation Sans');
+  size-adjust:103.96%; ascent-override:105%; descent-override:30%; line-gap-override:0%;
+}
+@font-face{
+  font-family:'Plex Arabic Fallback';
+  src:local('Arial'),local('Helvetica'),local('Liberation Sans');
+  size-adjust:101.64%; ascent-override:105%; descent-override:30%; line-gap-override:0%;
+}
 
 :root{
   /* ink ------------------------------------------------- */
@@ -60,10 +78,10 @@
   --ease-soft:cubic-bezier(.4,0,.2,1);
   --spring:cubic-bezier(.2,.9,.28,1.25);
 
-  --display:'Plus Jakarta Sans',system-ui,sans-serif;
-  --body:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
+  --display:'Plus Jakarta Sans','Jakarta Fallback',system-ui,sans-serif;
+  --body:'Plus Jakarta Sans','Jakarta Fallback',system-ui,-apple-system,sans-serif;
   --serif:'Instrument Serif',Georgia,serif;
-  --arabic:'IBM Plex Sans Arabic','Plus Jakarta Sans',system-ui,sans-serif;
+  --arabic:'IBM Plex Sans Arabic','Plex Arabic Fallback','Jakarta Fallback',system-ui,sans-serif;
   --mono:ui-monospace,'SFMono-Regular',Menlo,monospace;
   --maxw:1200px;
 }
@@ -108,7 +126,7 @@ body::before{
   position:sticky; top:0; z-index:200; color:#E9EBEE;
   background:rgba(11,14,18,.86); backdrop-filter:saturate(150%) blur(14px);
   box-shadow:inset 0 -1px 0 rgba(255,255,255,.09);
-  font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+  font-family:'Plus Jakarta Sans','Jakarta Fallback',system-ui,sans-serif;
 }
 .mockbar-in{
   max-width:1440px; margin:0 auto; padding:9px 16px;
@@ -120,13 +138,15 @@ body::before{
 }
 .mockbar .brand span{ color:var(--accent-2); }
 .mocknav{ display:flex; gap:2px; flex-wrap:wrap; flex:1; }
+/* every link carries the same weight so marking one active can never
+   change its width and rewrap the bar */
 .mocknav a{
-  text-decoration:none; font-size:12.5px; font-weight:500; color:#9BA4AF;
+  text-decoration:none; font-size:12.5px; font-weight:600; color:#9BA4AF;
   padding:6px 11px; border-radius:var(--r-pill); white-space:nowrap;
   transition:background .2s var(--ease), color .2s var(--ease);
 }
 .mocknav a:hover{ color:#fff; background:rgba(255,255,255,.09); }
-.mocknav a.on{ color:#12161B; background:#fff; font-weight:600; }
+.mocknav a.on{ color:#12161B; background:#fff; }
 .mocktools{ display:flex; gap:6px; align-items:center; }
 .chip{
   background:rgba(255,255,255,.07); box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);
@@ -390,8 +410,13 @@ html.mobile .pgrid{ grid-template-columns:repeat(2,1fr); gap:13px; }
   font-weight:500; margin-inline-start:8px; letter-spacing:0;
 }
 
-/* star rating — SVG, not text glyphs ---------------------- */
-.stars{ display:inline-flex; gap:1.5px; color:var(--accent); line-height:1; }
+/* star rating — SVG, not text glyphs.
+   Width and height are reserved so that filling these in from JS cannot
+   move anything around it. */
+.stars{
+  display:inline-flex; gap:1.5px; color:var(--accent); line-height:1;
+  width:71px; height:13px; flex:0 0 auto; vertical-align:middle;
+}
 .stars .i{ width:13px; height:13px; }
 .stars .i.off{ color:var(--ink-faint); opacity:.42; }
 
@@ -948,11 +973,236 @@ html.mobile .fstep .arrow{ display:none; }
 .mailfoot{ background:var(--sand); padding:22px 26px; font-size:12.2px; color:var(--ink-mute); text-align:center; line-height:1.7; }
 
 /* =========================================================
+   Conversion widgets — every one is a Customizer switch
+   ========================================================= */
+
+/* scrolling trust marquee ---------------------------------- */
+.marquee{
+  background:var(--night); color:#CFCAC2; overflow:hidden; padding:13px 0;
+  position:relative; mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+}
+.marquee .track{ display:flex; gap:0; width:max-content; animation:slide 34s linear infinite; }
+html[dir="rtl"] .marquee .track{ animation-direction:reverse; }
+.marquee:hover .track{ animation-play-state:paused; }
+@keyframes slide{ to{ transform:translateX(-50%); } }
+.marquee .m{
+  display:inline-flex; align-items:center; gap:10px; padding:0 30px;
+  font-size:13.5px; font-weight:600; letter-spacing:.01em; white-space:nowrap;
+}
+.marquee .m .i{ color:var(--accent-2); }
+.marquee .m::after{ content:''; width:4px; height:4px; border-radius:50%; background:rgba(255,255,255,.22); margin-inline-start:30px; }
+
+/* animated stat band --------------------------------------- */
+.statband{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+html.mobile .statband{ grid-template-columns:repeat(2,1fr); gap:16px; }
+.stat{ text-align:center; }
+.stat .nrow{
+  font-family:var(--display); font-weight:800; letter-spacing:-.05em;
+  font-size:clamp(30px,4vw,46px); line-height:1;
+  background:linear-gradient(160deg,var(--ink) 28%,var(--accent));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  display:inline-flex; align-items:baseline;
+  direction:ltr; /* "24h" and "12 400+", never "h24" — numerals stay LTR in RTL */
+}
+.stat .suf{ font-size:.5em; letter-spacing:-.02em; }
+.stat .lbl{ font-size:12.5px; color:var(--ink-mute); margin-top:8px; font-weight:600; letter-spacing:.02em; }
+
+/* countdown ------------------------------------------------ */
+.countdown{
+  display:flex; align-items:center; gap:13px; flex-wrap:wrap;
+  background:linear-gradient(120deg,#1A1005,#241407 55%,#2E1305);
+  color:#FFE9DC; border-radius:var(--r-md); padding:14px 17px; margin-bottom:22px;
+  box-shadow:inset 0 0 0 1px rgba(255,122,69,.28);
+}
+.countdown .cd-lbl{ font-size:13px; font-weight:600; display:flex; align-items:center; gap:9px; }
+.countdown .cd-lbl .i{ color:var(--accent-2); }
+/* hours:minutes:seconds reads left-to-right in Arabic too */
+.countdown .cd{ display:flex; gap:7px; margin-inline-start:auto; align-items:center; direction:ltr; }
+.countdown .cd-b{
+  background:rgba(255,255,255,.09); box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);
+  border-radius:9px; padding:7px 10px; min-width:46px; text-align:center;
+}
+.countdown .cd-n{
+  font-family:var(--display); font-weight:800; font-size:19px; letter-spacing:-.02em;
+  display:block; font-variant-numeric:tabular-nums;
+}
+.countdown .cd-u{ font-size:9.5px; text-transform:uppercase; letter-spacing:.1em; opacity:.6; }
+.countdown .sepc{ font-weight:800; opacity:.4; }
+
+/* social proof toast --------------------------------------- */
+.proof{
+  position:fixed; bottom:22px; inset-inline-start:22px; z-index:120;
+  display:flex; align-items:center; gap:12px; max-width:320px;
+  background:rgba(255,255,255,.94); backdrop-filter:saturate(160%) blur(16px);
+  border-radius:var(--r-md); padding:12px 40px 12px 14px;
+  box-shadow:var(--hair), var(--e4);
+  opacity:0; transform:translateY(14px) scale(.97); pointer-events:none;
+  transition:opacity .45s var(--ease), transform .45s var(--ease);
+}
+html[dir="rtl"] .proof{ padding:12px 14px 12px 40px; }
+.proof.on{ opacity:1; transform:none; pointer-events:auto; }
+html.mobile .proof{ inset-inline-start:14px; bottom:96px; max-width:270px; }
+.proof .pv{ color:var(--green); font-size:20px; flex:0 0 auto; }
+.proof .pt{ min-width:0; }
+.proof .pt b{ display:block; font-size:13.4px; font-weight:700; letter-spacing:-.01em; }
+.proof .pt span{ font-size:11.8px; color:var(--ink-mute); }
+.proof .px{
+  position:absolute; top:8px; inset-inline-end:10px; border:0; background:transparent;
+  color:var(--ink-faint); font-size:17px; line-height:1; cursor:pointer; padding:2px 4px;
+}
+.proof .px:hover{ color:var(--ink); }
+
+/* sticky desktop buy box ----------------------------------- */
+@media (min-width:981px){
+  .pdp > .buybox{ position:sticky; top:82px; }
+}
+html.mobile .pdp > .buybox{ position:static; }
+
+/* =========================================================
+   Theme options panel (screen 7)
+   ========================================================= */
+.optbar{
+  display:flex; gap:7px; flex-wrap:wrap; margin:16px 0 18px;
+  box-shadow:inset 0 -1px 0 #DCDCDE; padding-bottom:14px;
+}
+.wptab{
+  border:0; background:#fff; border-radius:var(--r-pill); padding:9px 16px;
+  font-size:13px; cursor:pointer; color:#3C434A; font-weight:600;
+  box-shadow:0 0 0 1px #DCDCDE;
+  transition:background .22s var(--ease), color .22s var(--ease), box-shadow .22s var(--ease), transform .22s var(--spring);
+  display:inline-flex; align-items:center; gap:8px;
+}
+.wptab:hover{ transform:translateY(-1px); box-shadow:0 0 0 1px #C3C4C7, 0 4px 10px -4px rgba(0,0,0,.2); }
+.wptab.on{ background:#1D2327; color:#fff; box-shadow:none; }
+.wptab .i{ width:15px; height:15px; }
+
+.optgrid{ display:grid; grid-template-columns:1fr 380px; gap:22px; align-items:start; }
+@media (max-width:1180px){ .optgrid{ grid-template-columns:1fr; } }
+html.mobile .optgrid{ grid-template-columns:1fr; }
+
+.optrow{
+  display:flex; align-items:center; gap:16px; padding:14px 0;
+  box-shadow:inset 0 -1px 0 #F0F0F1; flex-wrap:wrap;
+}
+.optrow:last-child{ box-shadow:none; }
+.optrow .lb{ flex:1; min-width:170px; }
+.optrow .lb b{ display:block; font-size:13.6px; font-weight:600; color:#1D2327; }
+.optrow .lb span{ font-size:12.4px; color:#646970; }
+.optrow .ct{ display:flex; align-items:center; gap:9px; flex-wrap:wrap; }
+.optrow input[type=text], .optrow select{
+  padding:8px 11px; border:1px solid #8C8F94; border-radius:4px; font-size:13.4px;
+  font-family:inherit; min-width:180px; background:#fff;
+}
+.optrow input[type=text]:focus, .optrow select:focus{ outline:none; border-color:#2271B1; box-shadow:0 0 0 1px #2271B1; }
+.optrow input[type=range]{ width:170px; accent-color:#2271B1; }
+
+.swatches{ display:flex; gap:8px; flex-wrap:wrap; }
+.swatch{
+  width:30px; height:30px; border-radius:9px; cursor:pointer; border:0; padding:0;
+  box-shadow:0 0 0 1px rgba(0,0,0,.12);
+  transition:transform .22s var(--spring), box-shadow .22s var(--ease);
+}
+.swatch:hover{ transform:translateY(-2px) scale(1.06); }
+.swatch.on{ box-shadow:0 0 0 2px #fff, 0 0 0 4px #1D2327; }
+
+.tgl{
+  width:42px; height:24px; border-radius:99px; background:#C3C4C7; position:relative;
+  cursor:pointer; display:inline-block; flex:0 0 auto; transition:background .25s var(--ease);
+}
+.tgl i{
+  position:absolute; top:3px; inset-inline-start:3px; width:18px; height:18px; border-radius:50%;
+  background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.3);
+  transition:transform .28s var(--spring);
+}
+.tgl.on{ background:#00A32B; }
+.tgl.on i{ transform:translateX(18px); }
+html[dir="rtl"] .tgl.on i{ transform:translateX(-18px); }
+.tgl.mini{ width:34px; height:20px; }
+.tgl.mini i{ width:14px; height:14px; }
+.tgl.mini.on i{ transform:translateX(14px); }
+html[dir="rtl"] .tgl.mini.on i{ transform:translateX(-14px); }
+
+/* shipping rate editor ------------------------------------- */
+.shiptools{ display:flex; gap:9px; align-items:center; flex-wrap:wrap; margin-bottom:12px; }
+.shiptools input{
+  padding:9px 12px; border:1px solid #8C8F94; border-radius:4px; font-size:13.4px;
+  min-width:190px; font-family:inherit;
+}
+/* fixed height, not max-height: the rows are injected after paint and a
+   growing container would shift everything under it (CLS) */
+.shipwrap{ height:330px; overflow:auto; box-shadow:inset 0 0 0 1px #E4E4E6; border-radius:4px; }
+.shiptable{ width:100%; border-collapse:collapse; font-size:13.2px; }
+.shiptable thead th{
+  position:sticky; top:0; background:#F6F7F7; text-align:start; padding:9px 11px;
+  font-size:11.6px; text-transform:uppercase; letter-spacing:.07em; color:#646970;
+  box-shadow:inset 0 -1px 0 #DCDCDE; z-index:2;
+}
+.shiptable td{ padding:7px 11px; box-shadow:inset 0 -1px 0 #F0F0F1; }
+.shiptable tr:hover td{ background:#FAFAFA; }
+.pxin{
+  width:78px; padding:6px 8px; border:1px solid #C3C4C7; border-radius:4px;
+  font-size:13px; font-family:var(--mono); text-align:end;
+}
+.pxin:focus{ outline:none; border-color:#2271B1; box-shadow:0 0 0 1px #2271B1; }
+.cur{ font-size:11.5px; color:#646970; margin-inline-start:5px; }
+
+/* draggable form-field list -------------------------------- */
+.fieldlist{ display:grid; gap:8px; }
+.fieldrow{
+  display:flex; align-items:center; gap:12px; background:#fff; padding:11px 13px;
+  border-radius:6px; box-shadow:0 0 0 1px #DCDCDE;
+  transition:box-shadow .22s var(--ease), transform .22s var(--ease);
+}
+.fieldrow:hover{ transform:translateY(-1px); box-shadow:0 0 0 1px #C3C4C7, 0 4px 10px -5px rgba(0,0,0,.25); }
+.fieldrow .drag{ color:#A7AAAD; cursor:grab; font-size:15px; letter-spacing:-2px; }
+.fieldrow .fn{ flex:1; font-size:13.5px; font-weight:600; color:#1D2327; }
+.fieldrow .fk{ font-family:var(--mono); font-size:11.6px; color:#646970; }
+.fieldrow .req{
+  font-size:10.6px; font-weight:700; text-transform:uppercase; letter-spacing:.07em;
+  background:#FDF4E3; color:#A96E07; padding:3px 8px; border-radius:99px;
+}
+.fieldrow .req.opt{ background:#F0F0F1; color:#646970; }
+
+/* live preview pane ---------------------------------------- */
+.pvbox{ position:sticky; top:20px; }
+.pvhead{
+  display:flex; align-items:center; gap:9px; font-size:11.6px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.1em; color:#646970; margin-bottom:10px;
+}
+.pvhead .live{ width:7px; height:7px; border-radius:50%; background:#00A32B; animation:pulse 2.4s infinite; }
+.livepv{
+  background:var(--sand); border-radius:14px; padding:20px; box-shadow:0 0 0 1px #DCDCDE;
+  font-family:var(--body);
+}
+.livepv .pvcard{
+  background:#fff; border-radius:var(--r-lg); overflow:hidden;
+  box-shadow:0 0 0 1px rgba(20,24,29,.06), var(--e2); transition:border-radius .3s var(--ease);
+}
+.livepv .pvcard .ph{ aspect-ratio:16/9; }
+.livepv .pvbody{ padding:15px 16px 17px; }
+.livepv .pvttl{
+  font-family:var(--display); font-weight:800; font-size:17px; letter-spacing:-.03em;
+  margin:0 0 4px; color:var(--ink);
+}
+.livepv .pvprice{
+  font-family:var(--display); font-weight:800; font-size:22px; letter-spacing:-.04em;
+  color:var(--accent); margin:6px 0 12px;
+}
+.livepv .btn{ width:100%; font-size:14.5px; padding:13px 18px; }
+.livepv .pvbadge{
+  display:inline-block; background:var(--accent); color:#fff; font-size:10.5px; font-weight:700;
+  padding:4px 10px; border-radius:99px; letter-spacing:.05em; text-transform:uppercase; margin-bottom:9px;
+}
+.pvnote{ font-size:12px; color:#646970; margin-top:11px; line-height:1.5; }
+
+/* =========================================================
    Bidi safety — Latin runs inside Arabic must not reorder
    ========================================================= */
 .price,.pricebox .now,.pricebox .was,.pricebox .save,.offer .p,.ship-opt .cost,
 .sline span,.sline b,.plan .amt,.stickybar .sp,.ordercard .onum,.keybox .k,
-.hero-float .n,.lictable code,.wpmain code,.summary span{ unicode-bidi:plaintext; }
+.hero-float .n,.lictable code,.wpmain code,.summary span,
+.countdown .cd-n,.stat .num,.pxin,.livepv .pvprice{ unicode-bidi:plaintext; }
 
 /* =========================================================
    Misc
