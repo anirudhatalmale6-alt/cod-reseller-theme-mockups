@@ -195,7 +195,13 @@ function buildBar(){
     b.classList.toggle('on', on);
     b.innerHTML = on ? icon('monitor') + ' Desktop' : icon('phoneDev') + ' Mobile';
   };
-  if(localStorage.getItem('mk_dev')==='m') document.getElementById('tDev').click();
+  /* the inline <head> script already applied .mobile before first paint —
+     only bring the chip's own label in line with it, don't toggle again */
+  if(document.documentElement.classList.contains('mobile')){
+    const d = document.getElementById('tDev');
+    d.classList.add('on');
+    d.innerHTML = icon('monitor') + ' Desktop';
+  }
 }
 
 /* Latin/number runs inside Arabic text are wrapped in LRM marks, otherwise
