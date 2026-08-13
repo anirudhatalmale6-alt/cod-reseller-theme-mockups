@@ -156,7 +156,8 @@ const PAGES = [
   ["thankyou.html","3 · Order confirmed"],
   ["sales-site.html","4 · License sales site"],
   ["email-delivery.html","5 · Auto-delivery email"],
-  ["admin-license.html","6 · Theme activation (WP admin)"]
+  ["admin-license.html","6 · Theme activation (WP admin)"],
+  ["admin-options.html","7 · Theme options (WP admin)"]
 ];
 
 function buildBar(){
@@ -164,17 +165,27 @@ function buildBar(){
   if(!host) return;
   const here = location.pathname.split('/').pop() || 'index.html';
   host.className = 'mockbar';
-  host.innerHTML =
-    '<div class="mockbar-in">' +
-      '<div class="brand">COD<span>·</span>Theme mockup</div>' +
-      '<div class="mocknav">' +
-        PAGES.map(p=>`<a href="${p[0]}" class="${p[0]===here?'on':''}">${p[1]}</a>`).join('') +
-      '</div>' +
-      '<div class="mocktools">' +
-        '<button class="chip" id="tLang">AR / FR</button>' +
-        '<button class="chip" id="tDev">' + icon('phoneDev') + ' Mobile</button>' +
-      '</div>' +
-    '</div>';
+
+  /* The bar is written statically into every page so it occupies its final
+     height at first paint. Injecting it here instead pushed the whole page
+     down a few hundred ms in and scored ~0.93 cumulative layout shift.
+     This branch is only a fallback if the static markup is missing.       */
+  if(!host.querySelector('.mockbar-in')){
+    host.innerHTML =
+      '<div class="mockbar-in">' +
+        '<div class="brand">COD<span>·</span>Theme mockup</div>' +
+        '<div class="mocknav">' +
+          PAGES.map(p=>`<a href="${p[0]}">${p[1]}</a>`).join('') +
+        '</div>' +
+        '<div class="mocktools">' +
+          '<button class="chip" id="tLang">AR / FR</button>' +
+          '<button class="chip" id="tDev">' + icon('phoneDev') + ' Mobile</button>' +
+        '</div>' +
+      '</div>';
+  }
+  host.querySelectorAll('.mocknav a').forEach(a=>{
+    a.classList.toggle('on', a.getAttribute('href') === here);
+  });
 
   document.getElementById('tLang').onclick = ()=> setLang(document.documentElement.lang==='ar'?'fr':'ar');
   document.getElementById('tDev').onclick = ()=>{
@@ -218,6 +229,10 @@ function setLang(lang){
   fillWilayas();
   if(typeof window.__resetCommunes === 'function') window.__resetCommunes();
   if(typeof window.__codRender === 'function') window.__codRender();
+  if(typeof window.__shipDraw === 'function'){
+    const q = document.getElementById('shipSearch');
+    window.__shipDraw(q ? q.value : '');
+  }
 }
 
 /* ---------- 4. Money helper ------------------------------------------- */
@@ -362,6 +377,77 @@ function initCOD(){
   };
 }
 
+/* ---------- 5b. Conversion widgets -------------------------------------
+   Countdown, social-proof toasts and animated stats. In the real theme
+   each of these is a switch in the Customizer — see admin-options.html.  */
+
+function initCountdown(){
+  const box = document.getElementById('countdown');
+  if(!box) return;
+  let left = 2*3600 + 14*60 + 33;           // demo value, admin-configurable
+  const pad = n => String(n).padStart(2,'0');
+  const cells = box.querySelectorAll('.cd-n');
+  const tick = ()=>{
+    if(left <= 0) left = 3*3600;
+    const h = Math.floor(left/3600), m = Math.floor((left%3600)/60), s = left%60;
+    [h,m,s].forEach((v,i)=>{ if(cells[i] && cells[i].textContent !== pad(v)) cells[i].textContent = pad(v); });
+    left--;
+  };
+  tick();
+  setInterval(tick, 1000);
+}
+
+const PROOF = [
+  ["أمين","Amine","وهران","Oran",4],
+  ["سارة","Sarah","سطيف","Sétif",11],
+  ["ياسين","Yacine","الجزائر","Alger",17],
+  ["نسرين","Nesrine","قسنطينة","Constantine",23],
+  ["كريم","Karim","عنابة","Annaba",31],
+  ["ليلى","Leila","تلمسان","Tlemcen",38]
+];
+function initProof(){
+  const host = document.getElementById('proof');
+  if(!host || REDUCED) return;
+  let i = 0;
+  const show = ()=>{
+    const ar = document.documentElement.lang === 'ar';
+    const p = PROOF[i % PROOF.length]; i++;
+    host.innerHTML =
+      '<span class="pv">' + icon('checkCircle') + '</span>' +
+      '<div class="pt"><b>' + (ar ? p[0]+' من '+p[2] : p[1]+' de '+p[3]) + '</b>' +
+      '<span>' + (ar ? 'طلب هذا المنتج قبل ‎'+p[4]+'‎ دقيقة' : 'a commandé ce produit il y a '+p[4]+' min') + '</span></div>' +
+      '<button class="px" aria-label="close">&times;</button>';
+    host.querySelector('.px').onclick = ()=> host.classList.remove('on');
+    host.classList.add('on');
+    setTimeout(()=> host.classList.remove('on'), 5200);
+  };
+  setTimeout(show, 3200);
+  setInterval(show, 13000);
+}
+
+function initStats(){
+  const nums = document.querySelectorAll('.stat .num[data-to]');
+  if(!nums.length) return;
+  const run = el =>{
+    const to = parseFloat(el.dataset.to), dec = (el.dataset.dec|0);
+    const fmt = v => dec ? v.toFixed(dec)
+      : new Intl.NumberFormat('fr-DZ').format(Math.round(v)).replace(/ | /g,' ');
+    if(REDUCED){ el.textContent = fmt(to); return; }
+    const t0 = performance.now(), dur = 1300;
+    const step = now =>{
+      const p = Math.min(1,(now-t0)/dur), e = 1-Math.pow(1-p,3);
+      el.textContent = fmt(to*e);
+      if(p<1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  if(!('IntersectionObserver' in window)){ nums.forEach(run); return; }
+  const io = new IntersectionObserver(es=>es.forEach(en=>{
+    if(en.isIntersecting){ run(en.target); io.unobserve(en.target); }
+  }), { threshold:.5 });
+  nums.forEach(n=>io.observe(n));
+}
+
 /* ---------- 6. WP-admin license state switcher ------------------------ */
 function initStates(){
   const tabs = document.querySelectorAll('.statetab');
@@ -377,6 +463,97 @@ function initStates(){
   });
 }
 
+/* ---------- 6b. Theme options panel (screen 7) ------------------------
+   Demonstrates that everything on the storefront is editable from WP
+   admin: no template file is ever touched by the buyer.               */
+function initOptions(){
+  const tabs = document.querySelectorAll('.wptab');
+  if(!tabs.length) return;
+
+  tabs.forEach(t=>{
+    t.onclick = ()=>{
+      tabs.forEach(x=>x.classList.remove('on'));
+      t.classList.add('on');
+      document.querySelectorAll('.optpane').forEach(p=>{
+        p.classList.toggle('hidden', p.dataset.tab !== t.dataset.tab);
+      });
+    };
+  });
+
+  const pv = document.querySelector('.livepv');
+  const setVar = (k,v)=>{ if(pv) pv.style.setProperty(k,v); };
+
+  // colour swatches -> live preview, no reload
+  document.querySelectorAll('.swatch').forEach(s=>{
+    s.style.background = s.dataset.val;
+    s.onclick = ()=>{
+      s.parentElement.querySelectorAll('.swatch').forEach(x=>x.classList.remove('on'));
+      s.classList.add('on');
+      setVar(s.dataset.var, s.dataset.val);
+      if(s.dataset.var === '--accent'){
+        setVar('--accent-2', s.dataset.val2 || s.dataset.val);
+        setVar('--accent-ring', s.dataset.val + '2b');
+        setVar('--accent-wash', s.dataset.wash || '#FFF3EE');
+      }
+      const hex = document.getElementById('optHex');
+      if(hex && s.dataset.var === '--accent') hex.value = s.dataset.val.toUpperCase();
+    };
+  });
+
+  const font = document.getElementById('optFont');
+  if(font) font.onchange = ()=>{ setVar('--display', font.value); setVar('--body', font.value); };
+
+  const rad = document.getElementById('optRadius');
+  if(rad) rad.oninput = ()=>{
+    const v = +rad.value;
+    setVar('--r-sm', (v*0.5)+'px'); setVar('--r-md', (v*0.66)+'px');
+    setVar('--r-lg', v+'px');       setVar('--r-xl', (v*1.35)+'px');
+    const out = document.getElementById('optRadiusVal'); if(out) out.textContent = v+'px';
+  };
+
+  const btnStyle = document.getElementById('optBtn');
+  if(btnStyle) btnStyle.onchange = ()=>{
+    const b = pv && pv.querySelector('.btn');
+    if(b) b.style.borderRadius = btnStyle.value === 'pill' ? '999px'
+                              : btnStyle.value === 'round' ? '12px' : '2px';
+  };
+
+  // switches
+  document.querySelectorAll('.tgl').forEach(t=>{
+    if(!t.querySelector('i')) t.innerHTML = '<i></i>';
+    t.onclick = ()=>{
+      t.classList.toggle('on');
+      const tgt = t.dataset.pv && pv && pv.querySelector(t.dataset.pv);
+      if(tgt) tgt.style.display = t.classList.contains('on') ? '' : 'none';
+    };
+  });
+
+  // 58-wilaya rate table, editable + searchable
+  const tb = document.getElementById('shipRows');
+  if(tb){
+    const ar = () => document.documentElement.lang === 'ar';
+    const draw = (q='')=>{
+      const rows = WILAYAS.filter(w=>{
+        const s = (w[1]+' '+w[2]+' '+w[0]).toLowerCase();
+        return !q || s.includes(q.toLowerCase());
+      });
+      tb.innerHTML = rows.map(w=>
+        '<tr><td><b>'+String(w[0]).padStart(2,'0')+'</b> '+(ar()?w[1]:w[2])+'</td>'+
+        '<td><input class="pxin" value="'+w[3]+'"><span class="cur">DA</span></td>'+
+        '<td><input class="pxin" value="'+w[4]+'"><span class="cur">DA</span></td>'+
+        '<td><span class="tgl on mini"><i></i></span></td></tr>'
+      ).join('');
+      const c = document.getElementById('shipCount');
+      if(c) c.textContent = rows.length;
+      tb.querySelectorAll('.tgl').forEach(t=> t.onclick = ()=> t.classList.toggle('on'));
+    };
+    draw();
+    const q = document.getElementById('shipSearch');
+    if(q) q.oninput = ()=> draw(q.value);
+    window.__shipDraw = draw;
+  }
+}
+
 /* ---------- boot ------------------------------------------------------ */
 document.addEventListener('DOMContentLoaded', ()=>{
   injectSprite();
@@ -384,7 +561,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
   renderStars();
   initCOD();
   initStates();
+  initOptions();
   initReveal();
+  initCountdown();
+  initProof();
+  initStats();
   setLang(localStorage.getItem('mk_lang') || 'ar');
   if(typeof window.__codRender === 'function') window.__codRender();
 });
