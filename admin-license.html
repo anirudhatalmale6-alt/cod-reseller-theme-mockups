@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>6 · Theme activation (WP admin) — COD Reseller Theme</title>
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<div id="mockbar"></div>
+
+<div class="frame">
+
+  <div style="background:var(--sand);padding:18px 22px 6px">
+    <p style="margin:0 0 10px;font-size:13.6px;color:var(--ink-soft)" data-ar="هذه الشاشة يراها زبونك داخل لوحة ووردبريس. اضغط الأزرار لتصفح كل الحالات الممكنة:">Écran vu par votre client dans son admin WordPress. Cliquez pour parcourir les états :</p>
+    <div class="statetabs">
+      <button class="statetab on" data-state="new" data-ar="١ · غير مفعّل">1 · Non activée</button>
+      <button class="statetab" data-state="bad" data-ar="٢ · مفتاح خاطئ">2 · Clé invalide</button>
+      <button class="statetab" data-state="taken" data-ar="٣ · مستعمل على نطاق آخر">3 · Déjà utilisée ailleurs</button>
+      <button class="statetab" data-state="ok" data-ar="٤ · مفعّل">4 · Active</button>
+      <button class="statetab" data-state="soon" data-ar="٥ · قرب الانتهاء">5 · Expire bientôt</button>
+      <button class="statetab" data-state="dead" data-ar="٦ · منتهية">6 · Expirée</button>
+    </div>
+  </div>
+
+  <div class="wpadmin">
+    <div class="wpside">
+      <div class="item">📊 <span data-ar="لوحة التحكم">Tableau de bord</span></div>
+      <div class="item">🛒 <span>WooCommerce</span></div>
+      <div class="item">📦 <span data-ar="المنتجات">Produits</span></div>
+      <div class="item">🎨 <span data-ar="المظهر">Apparence</span></div>
+      <div class="item on">🔑 <span data-ar="تفعيل القالب">Activation du thème</span></div>
+      <div class="item">🚚 <span data-ar="أسعار التوصيل">Tarifs de livraison</span></div>
+      <div class="item">⚙️ <span data-ar="الإعدادات">Réglages</span></div>
+    </div>
+
+    <div class="wpmain">
+      <h1 class="wph" data-ar="تفعيل القالب — Nadhif COD">Activation du thème — Nadhif COD</h1>
+      <p style="font-size:13.4px;color:#646970;margin:0" data-ar="أدخل مفتاح الترخيص الذي وصلك بالبريد لتفعيل القالب والتحديثات.">Saisissez la clé reçue par e-mail pour activer le thème et les mises à jour.</p>
+
+      <!-- STATE 1 : not activated -->
+      <div data-state="new">
+        <div class="wpnotice warn">
+          <b data-ar="القالب غير مفعّل.">Thème non activé.</b>
+          <span data-ar="بعض الوظائف (نموذج الطلب، أسعار التوصيل، التحديثات) معطّلة إلى غاية إدخال مفتاح صحيح.">Le formulaire de commande, la grille de livraison et les mises à jour restent désactivés tant qu'aucune clé valide n'est saisie.</span>
+        </div>
+        <div class="wpbox">
+          <div class="hd">🔑 <span data-ar="مفتاح الترخيص">Clé de licence</span></div>
+          <div class="bd">
+            <div class="wpfield">
+              <input type="text" placeholder="CODZ-XXXX-XXXX-XXXX" value="">
+              <button class="wpbtn" data-ar="تفعيل">Activer la licence</button>
+            </div>
+            <p style="font-size:12.8px;color:#646970;margin:12px 0 0" data-ar="النطاق الذي سيُربط به المفتاح: maboutique.dz — بعد التفعيل لا يعمل هذا المفتاح على أي نطاق آخر.">Domaine qui sera verrouillé : <code>maboutique.dz</code> — après activation, la clé ne fonctionnera sur aucun autre domaine.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATE 2 : invalid key -->
+      <div data-state="bad" class="hidden">
+        <div class="wpnotice err">
+          <b data-ar="مفتاح غير معروف.">Clé inconnue.</b>
+          <span data-ar="تحقق من المفتاح أو تواصل مع البائع. (رمز الخطأ: KEY_NOT_FOUND)">Vérifiez la saisie ou contactez le vendeur. (code : KEY_NOT_FOUND)</span>
+        </div>
+        <div class="wpbox">
+          <div class="hd">🔑 <span data-ar="مفتاح الترخيص">Clé de licence</span></div>
+          <div class="bd">
+            <div class="wpfield">
+              <input type="text" value="CODZ-0000-0000-0000" style="border-color:#D63638;background:#FCF0F1">
+              <button class="wpbtn" data-ar="إعادة المحاولة">Réessayer</button>
+            </div>
+            <p style="font-size:12.8px;color:#646970;margin:12px 0 0" data-ar="الخادم رد خلال 0.4 ثانية. لن يُحجب القالب في حال انقطاع الاتصال بالخادم — تُمنح مهلة سماح 7 أيام.">Réponse du serveur en 0,4 s. En cas de serveur injoignable, le thème n'est pas bloqué : un délai de grâce de 7 jours s'applique.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATE 3 : already used on another domain -->
+      <div data-state="taken" class="hidden">
+        <div class="wpnotice err">
+          <b data-ar="هذا المفتاح مستعمل على نطاق آخر.">Cette clé est déjà utilisée sur un autre domaine.</b>
+          <span data-ar="مرتبط حاليا بـ ancienboutique.dz منذ 02/06/2026. (رمز الخطأ: DOMAIN_MISMATCH)">Verrouillée sur <code>ancienneboutique.dz</code> depuis le 02/06/2026. (code : DOMAIN_MISMATCH)</span>
+        </div>
+        <div class="wpbox">
+          <div class="hd">🔁 <span data-ar="طلب نقل الرخصة">Demander un transfert</span></div>
+          <div class="bd">
+            <p style="font-size:13.4px;margin:0 0 13px" data-ar="إذا غيّرت النطاق، أرسل طلب نقل. البائع يوافق عليه من لوحته وتُفعَّل الرخصة على النطاق الجديد.">Si vous avez changé de domaine, envoyez une demande de transfert. Le vendeur la valide depuis son tableau de bord et la clé bascule sur le nouveau domaine.</p>
+            <button class="wpbtn sec" data-ar="إرسال طلب نقل إلى maboutique.dz">Demander le transfert vers maboutique.dz</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATE 4 : active -->
+      <div data-state="ok" class="hidden">
+        <div class="wpnotice ok">
+          <b data-ar="الرخصة مفعّلة.">Licence active.</b>
+          <span data-ar="كل وظائف القالب والتحديثات متاحة.">Toutes les fonctions du thème et les mises à jour sont disponibles.</span>
+        </div>
+        <div class="wpbox">
+          <div class="hd">✅ <span data-ar="حالة الرخصة">État de la licence</span></div>
+          <div class="bd">
+            <table class="lictable">
+              <tr><td data-ar="المفتاح">Clé</td><td><code>CODZ-7F3A-••••-B2EM</code></td></tr>
+              <tr><td data-ar="الحالة">Statut</td><td><span class="pill green" data-ar="مفعّلة">Active</span></td></tr>
+              <tr><td data-ar="النطاق المرتبط">Domaine verrouillé</td><td><code>maboutique.dz</code></td></tr>
+              <tr><td data-ar="الخطة">Offre</td><td data-ar="3 أشهر">3 mois</td></tr>
+              <tr><td data-ar="تاريخ الانتهاء">Expire le</td><td>13/11/2026</td></tr>
+              <tr><td data-ar="المدة المتبقية">Temps restant</td><td>
+                <span data-ar="63 يوما">63 jours</span>
+                <div class="meter"><i style="width:70%"></i></div>
+              </td></tr>
+              <tr><td data-ar="آخر تحقق">Dernière vérification</td><td data-ar="اليوم 03:00 (تحقق يومي آلي)">Aujourd'hui 03:00 (contrôle quotidien automatique)</td></tr>
+            </table>
+            <div style="margin-top:16px;display:flex;gap:9px;flex-wrap:wrap">
+              <button class="wpbtn sec" data-ar="التحقق الآن">Vérifier maintenant</button>
+              <button class="wpbtn danger" data-ar="إلغاء التفعيل على هذا الموقع">Désactiver sur ce site</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATE 5 : expiring soon -->
+      <div data-state="soon" class="hidden">
+        <div class="wpnotice warn">
+          <b data-ar="تنتهي الرخصة خلال 6 أيام.">Votre licence expire dans 6 jours.</b>
+          <span data-ar="جدّدها قبل 19/08/2026 حتى لا يتوقف نموذج الطلب.">Renouvelez avant le 19/08/2026 pour éviter la désactivation du formulaire de commande.</span>
+        </div>
+        <div class="wpbox">
+          <div class="hd">⏳ <span data-ar="حالة الرخصة">État de la licence</span></div>
+          <div class="bd">
+            <table class="lictable">
+              <tr><td data-ar="الحالة">Statut</td><td><span class="pill" data-ar="قرب الانتهاء">Expire bientôt</span></td></tr>
+              <tr><td data-ar="النطاق المرتبط">Domaine verrouillé</td><td><code>maboutique.dz</code></td></tr>
+              <tr><td data-ar="تاريخ الانتهاء">Expire le</td><td>19/08/2026</td></tr>
+              <tr><td data-ar="المدة المتبقية">Temps restant</td><td><span data-ar="6 أيام">6 jours</span><div class="meter"><i class="warn" style="width:9%"></i></div></td></tr>
+            </table>
+            <div style="margin-top:16px"><button class="wpbtn" data-ar="تجديد الرخصة">Renouveler la licence</button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATE 6 : expired -->
+      <div data-state="dead" class="hidden">
+        <div class="wpnotice err">
+          <b data-ar="انتهت صلاحية الرخصة.">Licence expirée.</b>
+          <span data-ar="نموذج الطلب وأسعار التوصيل والتحديثات معطّلة. تصميم الموقع ومحتواه لم يُحذف — يعود كل شيء فور التجديد.">Le formulaire de commande, la grille de livraison et les mises à jour sont désactivés. Le contenu et le design du site ne sont pas supprimés : tout revient dès le renouvellement.</span>
+        </div>
+        <div class="wpbox">
+          <div class="hd">⛔ <span data-ar="حالة الرخصة">État de la licence</span></div>
+          <div class="bd">
+            <table class="lictable">
+              <tr><td data-ar="الحالة">Statut</td><td><span class="pill red" data-ar="منتهية">Expirée</span></td></tr>
+              <tr><td data-ar="تاريخ الانتهاء">Expirée le</td><td>02/08/2026</td></tr>
+              <tr><td data-ar="المدة المتبقية">Temps restant</td><td><span data-ar="0 يوم">0 jour</span><div class="meter"><i class="bad" style="width:2%"></i></div></td></tr>
+            </table>
+            <div style="margin-top:16px;display:flex;gap:9px;flex-wrap:wrap">
+              <button class="wpbtn" data-ar="تجديد الآن">Renouveler maintenant</button>
+              <button class="wpbtn sec" data-ar="إدخال مفتاح آخر">Saisir une autre clé</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wpbox">
+        <div class="hd">🛡️ <span data-ar="كيف يتم التحقق">Comment se fait la vérification</span></div>
+        <div class="bd">
+          <ul style="margin:0;padding-inline-start:19px;font-size:13.4px;color:#3C434A;line-height:1.9">
+            <li data-ar="تحقق يومي آلي عبر مهمة مجدولة (WP-Cron) مع الخادم.">Contrôle quotidien automatique (WP-Cron) auprès du serveur de licences</li>
+            <li data-ar="المفتاح مرتبط بنطاق واحد + مخزّن مشفرا في قاعدة البيانات.">Clé verrouillée sur un seul domaine, stockée chiffrée en base</li>
+            <li data-ar="نطاقات التطوير (localhost, staging) لا تُحتسب.">Les environnements de test (localhost, staging) ne consomment pas d'activation</li>
+            <li data-ar="في حال تعذّر الوصول للخادم: مهلة سماح 7 أيام قبل أي تعطيل.">Serveur injoignable : 7 jours de grâce avant toute désactivation</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div style="background:var(--sand);padding:20px 22px 40px">
+    <div class="note" style="margin:0">
+      <span>ℹ️</span>
+      <span data-ar="&lt;b&gt;ملاحظة للمراجعة:&lt;/b&gt; هذه شاشات تصميم فقط — لا توجد أي شيفرة PHP بعد. البرمجة تبدأ بعد موافقتك.">
+        <b>Note de revue :</b> ce ne sont que des écrans de design — aucun code PHP n'a encore été écrit. Le développement démarre après votre validation.
+      </span>
+    </div>
+  </div>
+
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

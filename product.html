@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2 · Product + COD form — COD Reseller Theme</title>
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<div id="mockbar"></div>
+
+<div class="frame">
+
+  <div class="topstrip">
+    <span data-ar="🚚 التوصيل إلى 58 ولاية · الدفع عند الاستلام">🚚 Livraison vers 58 wilayas · Paiement à la livraison</span>
+  </div>
+
+  <header class="site">
+    <div class="wrap site-in">
+      <a href="index.html" class="logo"><span class="dot"></span>Nadhif<span style="color:var(--accent)">.</span></a>
+      <nav class="main">
+        <a href="index.html" data-ar="الرئيسية">Accueil</a>
+        <a href="#" data-ar="المنتجات">Produits</a>
+        <a href="#" data-ar="تتبع الطلب">Suivi commande</a>
+      </nav>
+      <div style="display:flex;gap:9px;margin-inline-start:18px">
+        <button class="icon-btn">🔍</button><button class="icon-btn">🛒</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="crumbs"><a href="index.html" data-ar="الرئيسية">Accueil</a> › <span data-ar="العناية">Soin & Beauté</span> › <span data-ar="جهاز تدليك محمول">Masseur portatif Pro</span></div>
+
+    <div class="pdp">
+
+      <!-- LEFT : gallery + selling copy -->
+      <div class="gallery">
+        <div class="main"><span class="tag" data-ar="فيديو المنتج ▶">Vidéo produit ▶</span></div>
+        <div class="thumbs"><div class="on"></div><div></div><div></div><div></div></div>
+      </div>
+
+      <!-- RIGHT : buy block -->
+      <div class="buybox">
+        <h1 class="pdp-title" data-ar="جهاز تدليك محمول برو">Masseur portatif Pro</h1>
+        <div class="rating-row">
+          <span class="stars">★★★★★</span>
+          <span data-ar="124 تقييم">124 avis</span>
+          <span>·</span>
+          <span data-ar="أكثر من 900 قطعة مباعة">+900 pièces vendues</span>
+        </div>
+        <div class="pricebox">
+          <span class="now">3 900 DA</span>
+          <span class="was">5 900 DA</span>
+          <span class="save" data-ar="وفّر 2.000 DA">Économisez 2 000 DA</span>
+        </div>
+        <div class="stockline"><span class="d"></span><span data-ar="متوفر · تبقى 14 قطعة">En stock · il reste 14 pièces</span></div>
+
+        <!-- quantity offers -->
+        <div class="offers">
+          <div class="offer on">
+            <span class="radio"></span>
+            <span class="t"><b data-ar="قطعة واحدة">1 pièce</b><span data-ar="السعر العادي">Tarif normal</span></span>
+            <span class="p">3 900 DA</span>
+          </div>
+          <div class="offer">
+            <span class="ribbon" data-ar="الأكثر طلبا">POPULAIRE</span>
+            <span class="radio"></span>
+            <span class="t"><b data-ar="قطعتان">2 pièces</b><span data-ar="للقطعة الواحدة 3.450 DA">3 450 DA la pièce</span></span>
+            <span class="p">6 900 DA</span>
+          </div>
+          <div class="offer">
+            <span class="radio"></span>
+            <span class="t"><b data-ar="3 قطع">3 pièces</b><span data-ar="للقطعة الواحدة 3.166 DA · أفضل سعر">3 166 DA la pièce · meilleur prix</span></span>
+            <span class="p">9 500 DA</span>
+          </div>
+        </div>
+
+        <!-- ============ THE COD FORM ============ -->
+        <form class="codform" id="codform" novalidate>
+          <h3><span>📝</span><span data-ar="اطلب الآن — الدفع عند الاستلام">Commander — paiement à la livraison</span></h3>
+          <p class="hint" data-ar="املأ المعلومات وسنتصل بك لتأكيد الطلب. لا حاجة لبطاقة بنكية.">Remplissez le formulaire, nous vous appelons pour confirmer. Aucune carte bancaire requise.</p>
+
+          <div class="field">
+            <label for="fullname"><span data-ar="الاسم الكامل">Nom et prénom</span> <span class="req">*</span></label>
+            <input id="fullname" type="text" placeholder="Ex : Amine Belkacem" data-ar-ph="مثال: أمين بلقاسم" autocomplete="name">
+            <div class="errmsg" data-ar="الرجاء إدخال الاسم الكامل">Merci d'indiquer votre nom complet</div>
+          </div>
+
+          <div class="field">
+            <label for="phone"><span data-ar="رقم الهاتف">Numéro de téléphone</span> <span class="req">*</span></label>
+            <input id="phone" type="tel" inputmode="numeric" placeholder="05 / 06 / 07 xx xx xx xx" data-ar-ph="05 / 06 / 07 xx xx xx xx" autocomplete="tel">
+            <div class="errmsg" data-ar="رقم غير صحيح — 10 أرقام تبدأ بـ 05 أو 06 أو 07">Numéro invalide — 10 chiffres commençant par 05, 06 ou 07</div>
+          </div>
+
+          <div class="row2">
+            <div class="field">
+              <label for="wilaya"><span data-ar="الولاية">Wilaya</span> <span class="req">*</span></label>
+              <select id="wilaya"></select>
+              <div class="errmsg" data-ar="اختر الولاية">Choisissez une wilaya</div>
+            </div>
+            <div class="field">
+              <label for="commune"><span data-ar="البلدية">Commune</span> <span class="req">*</span></label>
+              <select id="commune" disabled></select>
+              <div class="errmsg" data-ar="اختر البلدية">Choisissez une commune</div>
+            </div>
+          </div>
+
+          <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--ink-soft)" data-ar="طريقة التوصيل">Mode de livraison</label>
+          <div class="ship-toggle">
+            <button type="button" class="ship-opt on" data-mode="home">
+              <b data-ar="التوصيل إلى المنزل">À domicile</b>
+              <span data-ar="يسلمك عامل التوصيل الطلب">Le livreur vient chez vous</span>
+              <span class="cost" id="homeCost">—</span>
+            </button>
+            <button type="button" class="ship-opt" data-mode="desk">
+              <b data-ar="مكتب التوصيل">Stopdesk</b>
+              <span data-ar="تستلم الطلب من المكتب">Retrait au bureau du transporteur</span>
+              <span class="cost" id="deskCost">—</span>
+            </button>
+          </div>
+
+          <div class="qtyrow">
+            <span style="font-size:13.5px;font-weight:600;color:var(--ink-soft)" data-ar="الكمية">Quantité</span>
+            <div class="qty">
+              <button type="button" id="qMinus">−</button><span id="qtyVal">1</span><button type="button" id="qPlus">+</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="note" data-ar="ملاحظة (اختياري)">Remarque (facultatif)</label>
+            <input id="note" type="text" placeholder="Point de repère, étage…" data-ar-ph="نقطة استدلال، الطابق…">
+          </div>
+
+          <div class="summary">
+            <div class="sline"><span data-ar="المجموع الفرعي">Sous-total</span><span id="sGoods">3 900 DA</span></div>
+            <div class="sline"><span data-ar="التوصيل">Livraison</span><span id="sShip">—</span></div>
+            <div class="sline total"><span data-ar="المجموع الكلي">Total à payer</span><b id="sTotal">3 900 DA</b></div>
+          </div>
+
+          <button type="submit" id="submitBtn" class="btn btn-primary btn-block btn-xl" data-ar="تأكيد الطلب — الدفع عند الاستلام">Confirmer la commande</button>
+
+          <div class="securenote"><span>🔒</span><span data-ar="معلوماتك تستعمل فقط لتوصيل الطلب">Vos données servent uniquement à la livraison</span></div>
+          <div class="paybadges">
+            <span class="paybadge" data-ar="الدفع عند الاستلام">Paiement à la livraison</span>
+            <span class="paybadge" data-ar="بدون دفع مسبق">Aucun prépaiement</span>
+            <span class="paybadge" data-ar="58 ولاية">58 wilayas</span>
+          </div>
+        </form>
+
+      </div>
+
+      <!-- selling copy — sits under the gallery on desktop, after the form on mobile -->
+      <div class="whycard">
+        <div class="card">
+          <h3 style="font-family:var(--display);font-weight:800;font-size:19px;margin:0 0 12px" data-ar="لماذا هذا المنتج؟">Pourquoi ce produit ?</h3>
+          <ul class="bullets" style="margin:0">
+            <li data-ar="6 مستويات اهتزاز لتخفيف آلام الظهر والرقبة">6 niveaux de vibration pour le dos et la nuque</li>
+            <li data-ar="بطارية 2500 مللي أمبير · 4 ساعات استعمال">Batterie 2500 mAh · 4h d'autonomie</li>
+            <li data-ar="خفيف الوزن، يوضع في حقيبة اليد">Léger, se glisse dans un sac à main</li>
+            <li data-ar="ضمان الاستبدال خلال 7 أيام">Échange garanti sous 7 jours</li>
+          </ul>
+        </div>
+
+        <div class="note" style="margin-top:20px">
+          <span>ℹ️</span>
+          <span data-ar="&lt;b&gt;ملاحظة للمراجعة:&lt;/b&gt; أسعار التوصيل هنا نموذجية فقط. سيتم استبدالها بجدول أسعارك الحقيقي (58 ولاية × منزل/مكتب) القابل للتعديل من لوحة تحكم ووردبريس."><b>Note de revue :</b> les tarifs de livraison affichés sont des exemples. Ils seront remplacés par votre vraie grille (58 wilayas × domicile/stopdesk), éditable depuis l'admin WordPress.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- sticky mobile buy bar -->
+  <div class="stickybar">
+    <span class="sp" id="stickyPrice">3 900 DA</span>
+    <a href="#codform" class="btn btn-primary" data-ar="اطلب الآن">Commander</a>
+  </div>
+
+  <footer class="site" style="margin-top:20px">
+    <div class="wrap fbot" style="margin:0;border:0;padding-top:0">
+      <span>© 2026 Nadhif Store</span>
+      <span data-ar="الدفع عند الاستلام في كامل التراب الوطني">Paiement à la livraison partout en Algérie</span>
+    </div>
+  </footer>
+
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>
