@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>7 · Theme options (WP admin) — COD Reseller Theme</title>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/plus-jakarta-sans-400-normal-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/plus-jakarta-sans-600-normal-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/plus-jakarta-sans-800-normal-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/ibm-plex-sans-arabic-400-normal-arabic.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/ibm-plex-sans-arabic-700-normal-arabic.woff2" crossorigin>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<div id="mockbar" class="mockbar"><div class="mockbar-in"><div class="brand">COD<span>·</span>Theme mockup</div><div class="mocknav"><a href="index.html">1 · Storefront</a><a href="product.html">2 · Product + COD form</a><a href="thankyou.html">3 · Order confirmed</a><a href="sales-site.html">4 · License sales site</a><a href="email-delivery.html">5 · Auto-delivery email</a><a href="admin-license.html">6 · Theme activation (WP admin)</a><a href="admin-options.html" class="on">7 · Theme options (WP admin)</a></div><div class="mocktools"><button class="chip" id="tLang">AR / FR</button><button class="chip" id="tDev"><svg class="i "><use href="#i-phoneDev"></use></svg> Mobile</button></div></div></div>
+
+<div class="frame">
+
+  <div style="background:var(--sand);padding:18px 22px 6px">
+    <p style="margin:0;font-size:13.4px;color:var(--ink-soft)" data-ar="كل ما يظهر في المتجر يُعدَّل من هنا. لا يفتح المشتري أي ملف ولا يكتب أي سطر كود. جرّب: غيّر اللون أو الخط أو الزوايا وشاهد المعاينة على اليمين تتغير فورا.">Tout ce qui s'affiche sur la boutique se règle ici. L'acheteur n'ouvre aucun fichier et n'écrit aucune ligne de code. Essayez : changez la couleur, la police ou les angles — l'aperçu à droite se met à jour instantanément.</p>
+  </div>
+
+  <div class="wpadmin">
+    <div class="wpside">
+      <div class="item"><svg class="i"><use href="#i-grid"></use></svg> <span data-ar="لوحة التحكم">Tableau de bord</span></div>
+      <div class="item"><svg class="i"><use href="#i-cart"></use></svg> <span>WooCommerce</span></div>
+      <div class="item"><svg class="i"><use href="#i-box"></use></svg> <span data-ar="المنتجات">Produits</span></div>
+      <div class="item"><svg class="i"><use href="#i-brush"></use></svg> <span data-ar="المظهر">Apparence</span></div>
+      <div class="item on"><svg class="i"><use href="#i-gear"></use></svg> <span data-ar="خيارات القالب">Options du thème</span></div>
+      <div class="item"><svg class="i"><use href="#i-key"></use></svg> <span data-ar="تفعيل القالب">Activation du thème</span></div>
+      <div class="item"><svg class="i"><use href="#i-truck"></use></svg> <span data-ar="أسعار التوصيل">Tarifs de livraison</span></div>
+    </div>
+
+    <div class="wpmain">
+      <h1 class="wph" data-ar="خيارات القالب — Nadhif COD">Options du thème — Nadhif COD</h1>
+      <p style="font-size:13.4px;color:#646970;margin:0" data-ar="التبويبات تغطي كل شيء: الهوية، البانرات، نموذج الطلب، أسعار 58 ولاية، والعروض.">Les onglets couvrent tout : identité, bannières, formulaire, tarifs des 58 wilayas, offres.</p>
+
+      <div class="optbar">
+        <button class="wptab on" data-tab="brand"><svg class="i"><use href="#i-brush"></use></svg><span data-ar="الهوية والألوان">Identité &amp; couleurs</span></button>
+        <button class="wptab" data-tab="banner"><svg class="i"><use href="#i-store"></use></svg><span data-ar="البانرات والنصوص">Bannières &amp; textes</span></button>
+        <button class="wptab" data-tab="form"><svg class="i"><use href="#i-form"></use></svg><span data-ar="نموذج الطلب">Formulaire COD</span></button>
+        <button class="wptab" data-tab="ship"><svg class="i"><use href="#i-truck"></use></svg><span data-ar="التوصيل (58 ولاية)">Livraison (58 wilayas)</span></button>
+        <button class="wptab" data-tab="offer"><svg class="i"><use href="#i-bolt"></use></svg><span data-ar="العروض والشارات">Offres &amp; badges</span></button>
+      </div>
+
+      <div class="optgrid">
+        <div>
+
+          <!-- ============ IDENTITY & COLOURS ============ -->
+          <div class="optpane" data-tab="brand">
+            <div class="wpbox">
+              <div class="hd"><svg class="i"><use href="#i-brush"></use></svg> <span data-ar="الهوية البصرية">Identité visuelle</span></div>
+              <div class="bd">
+                <div class="optrow">
+                  <div class="lb"><b data-ar="اللون الرئيسي">Couleur principale</b><span data-ar="يُطبَّق على الأزرار والأسعار والشارات">Appliquée aux boutons, prix et badges</span></div>
+                  <div class="ct">
+                    <div class="swatches">
+                      <button class="swatch on" data-var="--accent" data-val="#F2481D" data-val2="#FF7A45" data-wash="#FFF3EE"></button>
+                      <button class="swatch" data-var="--accent" data-val="#0E7C66" data-val2="#16A085" data-wash="#E7F4F0"></button>
+                      <button class="swatch" data-var="--accent" data-val="#1E5FCC" data-val2="#4A8CF7" data-wash="#EDF3FF"></button>
+                      <button class="swatch" data-var="--accent" data-val="#7A2FBF" data-val2="#A462E8" data-wash="#F5EDFF"></button>
+                      <button class="swatch" data-var="--accent" data-val="#C2185B" data-val2="#E8558C" data-wash="#FFEDF3"></button>
+                      <button class="swatch" data-var="--accent" data-val="#14181D" data-val2="#3C4652" data-wash="#F1F1F2"></button>
+                    </div>
+                    <input type="text" id="optHex" value="#F2481D" style="min-width:100px;font-family:var(--mono)">
+                  </div>
+                </div>
+
+                <div class="optrow">
+                  <div class="lb"><b data-ar="الخط">Police de caractères</b><span data-ar="خطوط تدعم العربية والفرنسية">Polices compatibles arabe et français</span></div>
+                  <div class="ct">
+                    <select id="optFont">
+                      <option value="'Plus Jakarta Sans',sans-serif">Plus Jakarta Sans</option>
+                      <option value="'IBM Plex Sans Arabic',sans-serif">IBM Plex Sans Arabic</option>
+                      <option value="Georgia,serif">Georgia</option>
+                      <option value="system-ui,sans-serif">Système</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="optrow">
+                  <div class="lb"><b data-ar="استدارة الزوايا">Arrondi des angles</b><span data-ar="من زوايا حادة إلى دائرية بالكامل">D'angles nets à totalement arrondis</span></div>
+                  <div class="ct">
+                    <input type="range" id="optRadius" min="0" max="34" value="22">
+                    <span id="optRadiusVal" style="font-family:var(--mono);font-size:12.6px;color:#646970">22px</span>
+                  </div>
+                </div>
+
+                <div class="optrow">
+                  <div class="lb"><b data-ar="شكل الأزرار">Forme des boutons</b><span data-ar="كبسولة / مستديرة / مربعة">Capsule / arrondi / carré</span></div>
+                  <div class="ct">
+                    <select id="optBtn">
+                      <option value="pill" data-ar="كبسولة">Capsule</option>
+                      <option value="round" data-ar="مستديرة">Arrondi</option>
+                      <option value="square" data-ar="مربعة">Carré</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="optrow">
+                  <div class="lb"><b data-ar="اتجاه الموقع">Sens de lecture</b><span data-ar="عربية RTL أو فرنسية LTR">Arabe (RTL) ou français (LTR)</span></div>
+                  <div class="ct"><select><option>RTL — العربية</option><option>LTR — Français</option><option data-ar="الاثنان مع زر تبديل">Les deux + sélecteur</option></select></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ============ BANNERS & TEXT ============ -->
+          <div class="optpane hidden" data-tab="banner">
+            <div class="wpbox">
+              <div class="hd"><svg class="i"><use href="#i-store"></use></svg> <span data-ar="الشريط العلوي والبانر">Bandeau et bannière</span></div>
+              <div class="bd">
+                <div class="optrow">
+                  <div class="lb"><b data-ar="الشريط العلوي">Bandeau du haut</b><span data-ar="النص المتحرك أعلى الصفحة">Le texte défilant en haut de page</span></div>
+                  <div class="ct"><span class="tgl on"></span><input type="text" value="Livraison vers 58 wilayas"></div>
+                </div>
+                <div class="optrow">
+                  <div class="lb"><b data-ar="عنوان البانر">Titre de la bannière</b><span data-ar="الكلمة الملوّنة تُحدَّد بين نجمتين">Le mot entre *astérisques* prend la couleur d'accent</span></div>
+                  <div class="ct"><input type="text" value="Commandez aujourd'hui. Payez *à la livraison*." style="min-width:290px"></div>
+                </div>
+                <div class="optrow">
+                  <div class="lb"><b data-ar="نص زر البانر">Texte du bouton</b><span data-ar="زر النداء الرئيسي">Le CTA principal</span></div>
+                  <div class="ct"><input type="text" value="Commander maintenant"></div>
+                </div>
+                <div class="optrow">
+                  <div class="lb"><b data-ar="صورة البانر">Image de la bannière</b><span data-ar="من مكتبة الوسائط">Depuis la médiathèque</span></div>
+                  <div class="ct"><button class="wpbtn sec" data-ar="اختر صورة">Choisir une image</button></div>
+                </div>
+                <div class="optrow">
+                  <div class="lb"><b data-ar="شريط الثقة المتحرك">Bandeau défilant de réassurance</b><span data-ar="العناصر التي تمر أسفل البانر">Les éléments qui défilent sous la bannière</span></div>
+                  <div class="ct"><span class="tgl on"></span><button class="wpbtn sec" data-ar="تعديل العناصر (6)">Modifier les éléments (6)</button></div>
+                </div>
+                <div class="optrow">
+                  <div class="lb"><b data-ar="شريط الأرقام">Bandeau de chiffres</b><span data-ar="عدد الزبائن، الولايات، التقييم">Clients, wilayas, note moyenne</span></div>
+                  <div class="ct"><span class="tgl on"></span><button class="wpbtn sec" data-ar="تعديل">Modifier</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ============ COD FORM ============ -->
+          <div class="optpane hidden" data-tab="form">
+            <div class="wpbox">
+              <div class="hd"><svg class="i"><use href="#i-form"></use></svg> <span data-ar="خانات نموذج الطلب">Champs du formulaire</span></div>
+              <div class="bd">
+                <p style="font-size:12.8px;color:#646970;margin:0 0 13px" data-ar="اسحب لإعادة الترتيب. أطفئ خانة لإخفائها من نموذج الطلب.">Glissez pour réordonner. Désactivez un champ pour le retirer du formulaire.</p>
+                <div class="fieldlist">
+                  <div class="fieldrow"><span class="drag">⣿</span><span class="fn" data-ar="الاسم الكامل">Nom et prénom</span><span class="fk">billing_name</span><span class="req" data-ar="إجباري">Requis</span><span class="tgl on"></span></div>
+                  <div class="fieldrow"><span class="drag">⣿</span><span class="fn" data-ar="رقم الهاتف">Téléphone</span><span class="fk">billing_phone</span><span class="req" data-ar="إجباري">Requis</span><span class="tgl on"></span></div>
+                  <div class="fieldrow"><span class="drag">⣿</span><span class="fn" data-ar="الولاية">Wilaya</span><span class="fk">billing_state</span><span class="req" data-ar="إجباري">Requis</span><span class="tgl on"></span></div>
+                  <div class="fieldrow"><span class="drag">⣿</span><span class="fn" data-ar="البلدية">Commune</span><span class="fk">billing_city</span><span class="req" data-ar="إجباري">Requis</span><span class="tgl on"></span></div>
+                  <div class="fieldrow"><span class="drag">⣿</span><span class="fn" data-ar="العنوان الكامل">Adresse complète</span><span class="fk">billing_address</span><span class="req opt" data-ar="اختياري">Facultatif</span><span class="tgl"></span></div>
+                  <div class="fieldrow"><span class="drag">⣿</span><span class="fn" data-ar="ملاحظة">Remarque</span><span class="fk">order_note</span><span class="req opt" data-ar="اختياري">Facultatif</span><span class="tgl on"></span></div>
+                </div>
+                <div style="margin-top:14px;display:flex;gap:9px;flex-wrap:wrap">
+                  <button class="wpbtn sec" data-ar="+ إضافة خانة مخصصة">+ Ajouter un champ personnalisé</button>
+                </div>
+              </div>
+            </div>
+            <div class="wpbox">
+              <div class="hd"><svg class="i"><use href="#i-shield"></use></svg> <span data-ar="التحقق ومكافحة الطلبات الوهمية">Validation &amp; anti-commandes fantômes</span></div>
+              <div class="bd">
+                <div class="optrow">
+                  <div class="lb"><b data-ar="التحقق من رقم الهاتف الجزائري">Format téléphone algérien</b><span data-ar="10 أرقام تبدأ بـ 05 / 06 / 07">10 chiffres commençant par 05 / 06 / 07</span></div>
+                  <div class="ct"><span class="tgl on"></span></div>
+                </div>
+                <div class="optrow">
+                  <div class="lb"><b data-ar="منع تكرار نفس الرقم">Bloquer les doublons</b><span data-ar="طلب واحد لكل رقم خلال 24 ساعة">Une commande par numéro / 24h</span></div>
+                  <div class="ct"><span class="tgl on"></span></div>
+                </div>
+                <div class="optrow">
+                  <div class="lb"><b data-ar="إشعار واتساب عند كل طلب">Notification WhatsApp par commande</b><span data-ar="يُرسل إلى رقم المتجر">Envoyée au numéro de la boutique</span></div>
+                  <div class="ct"><span class="tgl"></span><input type="text" value="0555 00 00 00"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ============ SHIPPING ============ -->
+          <div class="optpane hidden" data-tab="ship">
+            <div class="wpbox">
+              <div class="hd"><svg class="i"><use href="#i-truck"></use></svg> <span data-ar="جدول أسعار التوصيل">Grille tarifaire</span> — <span id="shipCount">58</span>&nbsp;<span data-ar="ولاية">wilayas</span></div>
+              <div class="bd">
+                <div class="shiptools">
+                  <input type="text" id="shipSearch" placeholder="Rechercher une wilaya…" data-ar-ph="ابحث عن ولاية…">
+                  <button class="wpbtn sec" data-ar="استيراد CSV">Importer un CSV</button>
+                  <button class="wpbtn sec" data-ar="تصدير CSV">Exporter</button>
+                  <button class="wpbtn sec" data-ar="تعديل جماعي">Édition groupée</button>
+                </div>
+                <div class="shipwrap">
+                  <table class="shiptable">
+                    <thead><tr>
+                      <th data-ar="الولاية">Wilaya</th>
+                      <th data-ar="إلى المنزل">À domicile</th>
+                      <th data-ar="مكتب التوصيل">Stopdesk</th>
+                      <th data-ar="مفعّلة">Active</th>
+                    </tr></thead>
+                    <tbody id="shipRows"></tbody>
+                  </table>
+                </div>
+                <div class="optrow" style="margin-top:6px">
+                  <div class="lb"><b data-ar="توصيل مجاني ابتداء من">Livraison offerte à partir de</b><span data-ar="اتركه فارغا لتعطيله">Laisser vide pour désactiver</span></div>
+                  <div class="ct"><input type="text" value="8000" style="min-width:110px"><span class="cur">DA</span></div>
+                </div>
+                <div class="optrow">
+                  <div class="lb"><b data-ar="البلديات لكل ولاية">Communes par wilaya</b><span data-ar="قائمة قابلة للتعديل أو الاستيراد">Liste modifiable ou importable</span></div>
+                  <div class="ct"><button class="wpbtn sec" data-ar="إدارة البلديات">Gérer les communes</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ============ OFFERS & BADGES ============ -->
+          <div class="optpane hidden" data-tab="offer">
+            <div class="wpbox">
+              <div class="hd"><svg class="i"><use href="#i-bolt"></use></svg> <span data-ar="عروض الكمية">Offres par quantité</span></div>
+              <div class="bd">
+                <div class="fieldlist">
+                  <div class="fieldrow"><span class="drag">⣿</span><span class="fn" data-ar="قطعة واحدة">1 pièce</span><input type="text" value="3900" class="pxin"><span class="cur">DA</span><span class="tgl on"></span></div>
+                  <div class="fieldrow"><span class="drag">⣿</span><span class="fn" data-ar="قطعتان">2 pièces</span><input type="text" value="6900" class="pxin"><span class="cur">DA</span><span class="tgl on"></span></div>
+                  <div class="fieldrow"><span class="drag">⣿</span><span class="fn" data-ar="3 قطع">3 pièces</span><input type="text" value="9500" class="pxin"><span class="cur">DA</span><span class="tgl on"></span></div>
+                </div>
+                <div style="margin-top:13px"><button class="wpbtn sec" data-ar="+ إضافة عرض">+ Ajouter une offre</button></div>
+              </div>
+            </div>
+
+            <div class="wpbox">
+              <div class="hd"><svg class="i"><use href="#i-clock"></use></svg> <span data-ar="الشارات والمحفّزات">Badges &amp; déclencheurs</span></div>
+              <div class="bd">
+                <div class="optrow">
+                  <div class="lb"><b data-ar="شارة التخفيض">Badge de réduction</b><span data-ar="تظهر تلقائيا إذا تجاوز التخفيض النسبة المحددة">S'affiche automatiquement au-delà du seuil</span></div>
+                  <div class="ct"><span class="tgl on"></span><input type="text" value="15" style="min-width:70px"><span class="cur">%</span></div>
+                </div>
+                <div class="optrow">
+                  <div class="lb"><b data-ar="تنبيه قرب نفاد المخزون">Alerte stock faible</b><span data-ar="«تبقى X قطعة» عندما ينزل المخزون تحت العتبة">« Il reste X pièces » sous ce seuil</span></div>
+                  <div class="ct"><span class="tgl on"></span><input type="text" value="20" style="min-width:70px"></div>
+                </div>
+                <div class="optrow">
+                  <div class="lb"><b data-ar="عدّاد انتهاء العرض">Compte à rebours de l'offre</b><span data-ar="المدة بالساعات، يُعاد تشغيله لكل زائر">Durée en heures, relancé par visiteur</span></div>
+                  <div class="ct"><span class="tgl on"></span><input type="text" value="3" style="min-width:70px"><span class="cur" data-ar="ساعات">h</span></div>
+                </div>
+                <div class="optrow">
+                  <div class="lb"><b data-ar="إشعارات الطلبات الأخيرة">Notifications « vient de commander »</b><span data-ar="أسماء وولايات حقيقية من آخر الطلبات">Noms et wilayas issus des vraies commandes</span></div>
+                  <div class="ct"><span class="tgl on"></span><select style="min-width:150px"><option data-ar="كل 13 ثانية">Toutes les 13 s</option><option data-ar="كل 30 ثانية">Toutes les 30 s</option><option data-ar="كل دقيقة">Toutes les minutes</option></select></div>
+                </div>
+                <div class="optrow">
+                  <div class="lb"><b data-ar="الشريط السفلي في الهاتف">Barre d'achat mobile</b><span data-ar="السعر + زر الطلب مثبتان أسفل الشاشة">Prix + bouton fixés en bas de l'écran</span></div>
+                  <div class="ct"><span class="tgl on"></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:9px;flex-wrap:wrap;margin-bottom:22px">
+            <button class="wpbtn" data-ar="حفظ التغييرات">Enregistrer les modifications</button>
+            <button class="wpbtn sec" data-ar="معاينة على الموقع">Prévisualiser sur le site</button>
+            <button class="wpbtn sec" data-ar="استرجاع الإعدادات الأصلية">Réinitialiser</button>
+          </div>
+        </div>
+
+        <!-- ============ LIVE PREVIEW ============ -->
+        <div class="pvbox">
+          <div class="pvhead"><span class="live"></span><span data-ar="معاينة مباشرة">Aperçu en direct</span></div>
+          <div class="livepv">
+            <div class="pvcard">
+              <div class="ph"></div>
+              <div class="pvbody">
+                <span class="pvbadge" data-ar="-35٪">-35%</span>
+                <p class="pvttl" data-ar="جهاز تدليك محمول برو">Masseur portatif Pro</p>
+                <div class="stars" data-rate="5"></div>
+                <div class="pvprice">3 900 DA</div>
+                <a href="#" class="btn btn-primary" data-ar="اطلب الآن — الدفع عند الاستلام">Commander — paiement à la livraison</a>
+              </div>
+            </div>
+          </div>
+          <p class="pvnote" data-ar="المعاينة تتغير فورا مع كل إعداد — نفس ما سيراه زبونك على الموقع. هذه المعاينة حقيقية وتعمل: جرّب الألوان والخط ومؤشر الاستدارة.">L'aperçu se met à jour à chaque réglage — exactement ce que verra votre client. Cet aperçu est réel et fonctionne : testez les couleurs, la police et le curseur d'arrondi.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div style="background:var(--sand);padding:20px 22px 40px">
+    <div class="note" style="margin:0">
+      <svg class="i"><use href="#i-info"></use></svg>
+      <span data-ar="&lt;b&gt;ملاحظة للمراجعة:&lt;/b&gt; هذه شاشة تصميم — تبديل التبويبات، المعاينة المباشرة، البحث في الولايات والمفاتيح تعمل فعلا. الحفظ في قاعدة البيانات يأتي في الخطوة 2."><b>Note de revue :</b> écran de design — les onglets, l'aperçu en direct, la recherche de wilaya et les interrupteurs fonctionnent déjà. L'enregistrement en base arrive à l'étape 2.</span>
+    </div>
+  </div>
+
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>
