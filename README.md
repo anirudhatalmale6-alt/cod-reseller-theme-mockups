@@ -34,6 +34,23 @@ The dark bar at the top is **not part of the theme** — it exists only for revi
 - License activation screen state switcher (not activated / invalid key / domain
   mismatch / active / expiring / expired)
 
+## Visual system (v2)
+
+- **Type** — Plus Jakarta Sans for UI and headings, Instrument Serif italic for the
+  one emphasised word in each hero. Fluid `clamp()` scale, tight optical tracking
+  on display sizes. IBM Plex Sans Arabic takes over the whole stack in RTL.
+- **Depth, not borders** — hairlines are 1px `box-shadow` rings at 5–9% opacity;
+  separation is carried by a five-step, warm-tinted elevation scale rather than
+  hard 1.5px strokes.
+- **Icons** — a hand-built stroked SVG set injected as a sprite. No emoji anywhere:
+  emoji render as different clip-art on every device and read as unfinished.
+- **Motion** — spring and ease curves as tokens. Cards lift, product images scale,
+  buttons carry a sheen sweep and a press state, selection ticks scale in,
+  section content eases up on scroll, and every amount counts up to its new value
+  instead of snapping. All of it collapses under `prefers-reduced-motion`.
+- **Forms** — inset-ring inputs on a tinted field that turns white on focus, 44–52px
+  touch targets, animated error state, and a pinned mobile price bar.
+
 ## Placeholder data
 
 Shipping rates, communes, prices, plan amounts and product content are examples.
