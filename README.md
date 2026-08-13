@@ -57,9 +57,10 @@ to open a file or write a line of code.
 
 The client asked for zero glitches and zero layout shift, so it was measured
 rather than assumed. Cumulative Layout Shift across all 7 pages, cold cache,
-at 1280px and 390px: **worst case 0.025** (Google's "good" threshold is 0.1).
+at 1280px and 390px: **worst case 0.05, most pages exactly 0.000**
+(Google's "good" threshold is 0.1).
 
-Three real causes were found and fixed:
+Five real causes were found and fixed:
 
 1. The review toolbar was injected by JS after first paint and pushed the page
    down — 0.93 on its own. It is now static markup in every page.
@@ -69,6 +70,14 @@ Three real causes were found and fixed:
    block. Fonts are now **self-hosted** in `assets/fonts/` and preloaded, so
    they are ready before first paint — and the theme no longer depends on a
    third-party CDN, which also matters for load times in Algeria.
+4. The serif italic used for the accent word in the hero was not preloaded;
+   when it landed late the H1 rewrapped and cost 0.65 on its own. All faces
+   are now declared `font-display: optional`, which forbids a late swap
+   outright, plus preloads so the real font is normally there anyway
+   (verified present on 42 of 42 cold loads).
+5. The page defaulted to Arabic but was authored in French, so the RTL flip
+   happened *after* first layout. Language and direction are now set by a
+   tiny inline script in `<head>`, before the body renders.
 
 ## Visual system (v2)
 
