@@ -13,6 +13,7 @@ Clickable design mockups for the WooCommerce COD reseller theme + license server
 | 4 | `sales-site.html` | Your license sales site: plans, flow, buyer checkout |
 | 5 | `email-delivery.html` | The automated delivery e-mail (ZIP + key + guide + invoice) |
 | 6 | `admin-license.html` | Theme activation screen inside the buyer's WP admin, all 6 states |
+| 7 | `admin-options.html` | Theme options: colours, fonts, banners, form fields, 58-wilaya rates, offers |
 
 ## Review toolbar
 
@@ -33,6 +34,41 @@ The dark bar at the top is **not part of the theme** — it exists only for revi
 - Full RTL layout mirroring, including bidi-safe price rendering
 - License activation screen state switcher (not activated / invalid key / domain
   mismatch / active / expiring / expired)
+
+## Conversion widgets (v3)
+
+Each one is a switch in the theme options screen, not a hard-coded block:
+
+- Scrolling reassurance marquee under the hero
+- Animated statistics band (counts up once, when scrolled into view)
+- Offer countdown on the product page (live, per-visitor duration)
+- "X from Oran just ordered" notifications, fed by real orders
+- Pinned mobile buy bar, sticky desktop buy box
+
+## Everything is editable from WP admin (screen 7)
+
+`admin-options.html` is interactive. Working in the mockup right now:
+tab switching, colour swatches and the arrondi slider driving a **live
+preview** that updates instantly, the searchable 58-wilaya rate table,
+the form-field list, and every toggle. Nothing there requires the buyer
+to open a file or write a line of code.
+
+## Layout stability
+
+The client asked for zero glitches and zero layout shift, so it was measured
+rather than assumed. Cumulative Layout Shift across all 7 pages, cold cache,
+at 1280px and 390px: **worst case 0.025** (Google's "good" threshold is 0.1).
+
+Three real causes were found and fixed:
+
+1. The review toolbar was injected by JS after first paint and pushed the page
+   down — 0.93 on its own. It is now static markup in every page.
+2. Star ratings are drawn from JS; their box is now reserved in CSS so filling
+   them in moves nothing.
+3. Google Fonts arrived after first paint and the swap reflowed every text
+   block. Fonts are now **self-hosted** in `assets/fonts/` and preloaded, so
+   they are ready before first paint — and the theme no longer depends on a
+   third-party CDN, which also matters for load times in Algeria.
 
 ## Visual system (v2)
 
