@@ -4,10 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>2 · Product + COD form — COD Reseller Theme</title>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/plus-jakarta-sans-400-normal-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/plus-jakarta-sans-600-normal-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/plus-jakarta-sans-800-normal-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/ibm-plex-sans-arabic-400-normal-arabic.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/ibm-plex-sans-arabic-700-normal-arabic.woff2" crossorigin>
+<link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/app.css">
 </head>
 <body>
-<div id="mockbar"></div>
+<div id="mockbar" class="mockbar"><div class="mockbar-in"><div class="brand">COD<span>·</span>Theme mockup</div><div class="mocknav"><a href="index.html">1 · Storefront</a><a href="product.html" class="on">2 · Product + COD form</a><a href="thankyou.html">3 · Order confirmed</a><a href="sales-site.html">4 · License sales site</a><a href="email-delivery.html">5 · Auto-delivery email</a><a href="admin-license.html">6 · Theme activation (WP admin)</a><a href="admin-options.html">7 · Theme options (WP admin)</a></div><div class="mocktools"><button class="chip" id="tLang">AR / FR</button><button class="chip" id="tDev"><svg class="i "><use href="#i-phoneDev"></use></svg> Mobile</button></div></div></div>
 
 <div class="frame">
 
@@ -67,6 +73,18 @@
           <span class="save" data-ar="وفّر 2.000 DA">Économisez 2 000 DA</span>
         </div>
         <div class="stockline"><span class="d"></span><span data-ar="متوفر · تبقى 14 قطعة">En stock · il reste 14 pièces</span></div>
+
+        <!-- offer countdown -->
+        <div class="countdown" id="countdown">
+          <span class="cd-lbl"><svg class="i"><use href="#i-bolt"></use></svg><span data-ar="ينتهي سعر العرض خلال">Prix promo valable encore</span></span>
+          <span class="cd">
+            <span class="cd-b"><span class="cd-n">02</span><span class="cd-u" data-ar="سا">h</span></span>
+            <span class="sepc">:</span>
+            <span class="cd-b"><span class="cd-n">14</span><span class="cd-u" data-ar="د">min</span></span>
+            <span class="sepc">:</span>
+            <span class="cd-b"><span class="cd-n">33</span><span class="cd-u" data-ar="ثا">sec</span></span>
+          </span>
+        </div>
 
         <!-- quantity offers -->
         <div class="offers">
@@ -186,6 +204,9 @@
       </div>
     </div>
   </div>
+
+  <!-- live social proof (Customizer switch) -->
+  <div class="proof" id="proof"></div>
 
   <!-- sticky mobile buy bar -->
   <div class="stickybar">
